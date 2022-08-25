@@ -38,6 +38,9 @@ class Employe
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $service = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Employe
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getService(): ?string
+    {
+        return $this->service;
+    }
+
+    public function setService(string $service): self
+    {
+        $this->service = $service;
 
         return $this;
     }
