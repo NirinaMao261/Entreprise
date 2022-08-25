@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\Employe;
 use App\Form\EmployeFormType;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,4 +77,25 @@ class EmployeController extends AbstractController
         ]);
     } // end function create
 
+    #[Route('/modifier-un-employe/{id}', name: 'update_employe', methods: ['GET', 'POST'])]
+    public function updateEmploye(Employe $employe, Request $request, EntityManager $entityManager) :Response{
+    {
+        $form = $this->createForm(EmployeFormType ::class, $employe)
+            ->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid) {
+                $entitymanager->persist($employe);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('default_home');
+        }  
+
+        return $this->render('form/employe.html.twig', [
+            'form_employe'=> $form->createView(),
+            'employe' => $employe
+        ]); 
+    }
+
+
 } // end class
+}

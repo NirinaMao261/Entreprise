@@ -2,7 +2,13 @@
 {% block title %}Ajouter un employé{% endblock %}
 
 {% block body %}
-<h1 class="text-center my-4">Ajouter un employé dans l'annuaire</h1>
+
+{% if employe is not defined %}
+    <h1 class="text-center my-4">Ajouter un employé dans l'annuaire</h1>
+
+{% else %}
+    <h1 class="text-center my-4">Modifier un employé dans l'annuaire</h1>
+{% endif %}
 
 {# form() est la fonction Twig pour afficher un formulaire}
     Il existe plusieurs façons de demander à Twig d'afficher un formulaire. #}
