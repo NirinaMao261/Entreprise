@@ -19,8 +19,8 @@ class EmployeFormType extends AbstractType
             ->add('email')
             ->add('adresse')
             ->add('poste')
+            ->add('service')
             ->add('salaire')
-            // ->add('createdAt')
             ->add('submit', SubmitType::class, [
                 'label'=>'Valider'
             ] )

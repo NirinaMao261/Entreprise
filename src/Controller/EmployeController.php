@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EmployeController extends AbstractController
@@ -78,7 +79,7 @@ class EmployeController extends AbstractController
     } // end function create
 
     #[Route('/modifier-un-employe/{id}', name: 'update_employe', methods: ['GET', 'POST'])]
-    public function updateEmploye(Employe $employe, Request $request, EntityManager $entityManager) :Response{
+    public function updateEmploye(Employe $employe, Request $request, EntityManagerInterface $entityManager) :Response{
     {
         $form = $this->createForm(EmployeFormType ::class, $employe)
             ->handleRequest($request);
@@ -98,4 +99,17 @@ class EmployeController extends AbstractController
 
 
 } // end class
+    }
+    #[Route('/supprimer-un-employe/{id}', name:'delete_employe',methods:['GET'])]
+    public function deleteEmploye(Employe $employe, EntityManagerInterface $entityManager) : RedirectResponse
+    {
+            #Pour utiliser la fonction de suppression de Doctrine, on appelle la methode remove() de $entityManager
+        $entityManager->remove($employe);
+            # On doit flush()également pour effectuer la suppression.
+        $entityManager->flush();
+
+        # On redirige directement sur la page d'accueil.
+        # La méthode redircetToRoute() pour retourner en objet de type RedirectToRoute
+        return $this->redirectToRoute('default_home');
+    }
 }
