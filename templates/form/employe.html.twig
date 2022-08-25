@@ -4,6 +4,15 @@
 {% block body %}
 <h1 class="text-center my-4">Ajouter un employé dans l'annuaire</h1>
 
-{{ form(form_employe)}}
+{# form() est la fonction Twig pour afficher un formulaire}
+    Il existe plusieurs façons de demander à Twig d'afficher un formulaire. #}
+
+<div class="row">
+    <div class="col-6 mx-auto">
+        {{ form(form_employe)}}
+    </div>
+</div>
+
+
 
 {% endblock %}
